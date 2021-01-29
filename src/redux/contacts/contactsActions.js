@@ -14,4 +14,6 @@ const delContact = createAction("contact/del");
 
 const changeFilter = createAction("contacts/changeFilter");
 
-export default { addContact, delContact, changeFilter };
+const contactsFromLS = createAction("contacts/contactsFromLS");
+
+export default { addContact, delContact, changeFilter, contactsFromLS };

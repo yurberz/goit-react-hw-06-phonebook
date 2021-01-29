@@ -37,6 +37,25 @@ const Container = styled.div`
     transform: translateX(0);
     transition: transform 500ms linear;
   }
+
+  .filterScale-enter {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  .filterScale-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 250ms linear;
+  }
+  .filterScale-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .filterScale-exit-active {
+    opacity: 0;
+    transform: scale(0.1);
+    transition: all 250ms linear;
+  }
 `;
 
 export default Container;
