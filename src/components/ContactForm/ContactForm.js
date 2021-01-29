@@ -10,8 +10,8 @@ class ContactForm extends Component {
   state = {
     name: "",
     number: "",
-    showEmptyNtf: false,
-    showByUsedNtf: false,
+    // showEmptyNtf: false,
+    // showByUsedNtf: false,
   };
 
   handleChange = (evt) => {
@@ -24,23 +24,24 @@ class ContactForm extends Component {
     evt.preventDefault();
 
     this.props.onSubmit(this.state);
-    const { name, number } = this.state;
 
-    if (
-      contacts.find(
-        (contact) => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
-      this.setState((state) => ({ showByUsedNtf: !state.showByUsedNtf }));
-    } else if (contacts.find((contact) => contact.number === number)) {
-      this.setState((state) => ({ showByUsedNtf: !state.showByUsedNtf }));
-    } else if (name.trim() === "" || number.trim() === "") {
-      this.setState((state) => ({ showEmptyNtf: !state.showEmptyNtf }));
-    } else {
-      this.setState(({ contacts }) => ({
-        contacts: [contact, ...contacts],
-      }));
-    }
+    // const { name, number } = this.state;
+
+    // if (
+    //   contacts.find(
+    //     (contact) => contact.name.toLowerCase() === name.toLowerCase()
+    //   )
+    // ) {
+    //   this.setState((state) => ({ showByUsedNtf: !state.showByUsedNtf }));
+    // } else if (contacts.find((contact) => contact.number === number)) {
+    //   this.setState((state) => ({ showByUsedNtf: !state.showByUsedNtf }));
+    // } else if (name.trim() === "" || number.trim() === "") {
+    //   this.setState((state) => ({ showEmptyNtf: !state.showEmptyNtf }));
+    // } else {
+    //   this.setState(({ contacts }) => ({
+    //     contacts: [contact, ...contacts],
+    //   }));
+    // }
 
     this.setState({ name: "", number: "" });
   };
