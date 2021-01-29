@@ -1,9 +1,9 @@
 import React from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import contactsActions from "../../redux/contacts/contactsActions";
 import Div from "./ContactListStyled";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const ContactList = ({ contacts, onDeleteContact }) => {
   return (

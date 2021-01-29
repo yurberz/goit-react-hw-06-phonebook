@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Empty, ByUsed } from "../Notifications/Notifications";
 import contactsAction from "../../redux/contacts/contactsActions";
 import Form from "./ContactFormStyled";
 
@@ -8,6 +10,8 @@ class ContactForm extends Component {
   state = {
     name: "",
     number: "",
+    showEmptyNtf: false,
+    showByUsedNtf: false,
   };
 
   handleChange = (evt) => {
@@ -20,43 +24,82 @@ class ContactForm extends Component {
     evt.preventDefault();
 
     this.props.onSubmit(this.state);
+    const { name, number } = this.state;
+
+    if (
+      contacts.find(
+        (contact) => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      this.setState((state) => ({ showByUsedNtf: !state.showByUsedNtf }));
+    } else if (contacts.find((contact) => contact.number === number)) {
+      this.setState((state) => ({ showByUsedNtf: !state.showByUsedNtf }));
+    } else if (name.trim() === "" || number.trim() === "") {
+      this.setState((state) => ({ showEmptyNtf: !state.showEmptyNtf }));
+    } else {
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
+    }
 
     this.setState({ name: "", number: "" });
   };
 
   render() {
-    const { name, number } = this.state;
+    const { name, number, showEmptyNtf, showByUsedNtf } = this.state;
 
     return (
-      <Form id="contact" onSubmit={this.handleSubmit}>
-        <label className="label">
-          Name
-          <input
-            className="input"
-            type="text"
-            name="name"
-            value={name}
-            onChange={this.handleChange}
-            placeholder="Type to name"
-          />
-        </label>
+      <>
+        <Form id="contact" onSubmit={this.handleSubmit}>
+          <label className="label">
+            Name
+            <input
+              className="input"
+              type="text"
+              name="name"
+              value={name}
+              onChange={this.handleChange}
+              placeholder="Type to name"
+            />
+          </label>
 
-        <label className="label">
-          Phone number
-          <input
-            className="input"
-            type="text"
-            name="number"
-            value={number}
-            onChange={this.handleChange}
-            placeholder="Type to phone(e.g. 111-11-11)"
-          />
-        </label>
+          <label className="label">
+            Phone number
+            <input
+              className="input"
+              type="text"
+              name="number"
+              value={number}
+              onChange={this.handleChange}
+              placeholder="Type to phone(e.g. 111-11-11)"
+            />
+          </label>
 
-        <button type="submit" className="submitBtn">
-          Add contact
-        </button>
-      </Form>
+          <button type="submit" className="submitBtn">
+            Add contact
+          </button>
+        </Form>
+
+        <CSSTransition
+          in={showEmptyNtf}
+          onEntered={() => this.setState({ showEmptyNtf: false })}
+          timeout={2000}
+          classNames="ntf"
+          unmountOnExit
+        >
+          <Empty />
+        </CSSTransition>
+
+        <CSSTransition
+          in={showByUsedNtf}
+          onEntered={() => this.setState({ showByUsedNtf: false })}
+          timeout={2000}
+          classNames="ntf"
+          unmountOnExit
+        >
+          <ByUsed />
+        </CSSTransition>
+      </>
     );
   }
 }

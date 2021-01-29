@@ -37,28 +37,6 @@ const Container = styled.div`
     transform: translateX(0);
     transition: transform 500ms linear;
   }
-
-  .ntf-enter {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-
-  .ntf-enter-active {
-    opacity: 1;
-    transform: translateX(0);
-    transition: all 250ms linear;
-  }
-
-  .ntf-exit {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .ntf-exit-active {
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 250ms linear;
-  }
 `;
 
 export default Container;
