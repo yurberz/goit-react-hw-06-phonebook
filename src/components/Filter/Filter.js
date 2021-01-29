@@ -1,18 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import contactsActions from "../../redux/contacts/contactsActions";
 import Label from "./FilterStyled";
 
 const Filter = ({ value, onChange }) => {
   return (
-    // <CSSTransition
-    //   in={contacts.length > 1}
-    //   classNames="filterScale"
-    //   timeout={250}
-    //   unmountOnExit
-    // >
     <Label>
       Find contacts by name
       <input
@@ -22,7 +15,6 @@ const Filter = ({ value, onChange }) => {
         onChange={(evt) => onChange(evt.currentTarget.value)}
       />
     </Label>
-    // </CSSTransition>
   );
 };
 
