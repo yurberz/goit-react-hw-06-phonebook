@@ -4,12 +4,20 @@ import PropTypes from "prop-types";
 import Div from "./ContactListStyled";
 import contactsActions from "../../redux/contacts/contactsActions";
 
-const ContactList = ({ contacts, onDeleteContact, onChange }) => {
+const ContactList = ({ contacts, filter, onDeleteContact, onChange }) => {
   const onHandleDelete = (evt) => {
     const { id } = evt.currentTarget;
 
     onDeleteContact(id);
-    onChange("");
+
+    if (
+      contacts.filter((contact) =>
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+      ).length < 2
+    ) {
+      onChange("");
+    }
+    // onChange("");
   };
 
   return (
@@ -47,6 +55,7 @@ const mSTP = (state) => {
 
   return {
     contacts: visibleContacts,
+    filter: state.contacts.filter,
   };
 };
 
