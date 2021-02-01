@@ -4,7 +4,14 @@ import PropTypes from "prop-types";
 import Div from "./ContactListStyled";
 import contactsActions from "../../redux/contacts/contactsActions";
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = ({ contacts, onDeleteContact, onChange }) => {
+  const onHandleDelete = (evt) => {
+    const { id } = evt.currentTarget;
+
+    onDeleteContact(id);
+    onChange("");
+  };
+
   return (
     <Div>
       <TransitionGroup component="ul">
@@ -17,7 +24,8 @@ const ContactList = ({ contacts, onDeleteContact }) => {
               <button
                 className="delBtn"
                 type="button"
-                onClick={() => onDeleteContact(id)}
+                id={id}
+                onClick={onHandleDelete}
               >
                 Delete
               </button>
@@ -44,6 +52,7 @@ const mSTP = (state) => {
 
 const mDTP = {
   onDeleteContact: contactsActions.delContact,
+  onChange: contactsActions.changeFilter,
 };
 
 ContactList.propTypes = {
